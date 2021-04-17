@@ -23,6 +23,7 @@ client.connect(err => {
   const serviceCollection = client.db("chitroGolpo").collection("service");
   const orderCollection = client.db("chitroGolpo").collection("orders");
   const reviewCollection = client.db("chitroGolpo").collection("reviews");
+  const adminCollection = client.db("chitroGolpo").collection("admin");
 
 
   // Add data to database 
@@ -83,7 +84,8 @@ client.connect(err => {
     orderCollection.insertOne({ data }).then((result) => {
       res.send(result.insertedCount > 0);
     });
-  }); 
+  });
+
 
   // Get Data From Server 
   app.get('/bookingList', (req, res) => {
@@ -113,6 +115,23 @@ client.connect(err => {
         res.send(documents)
       })
   })
+
+
+  // Make Admin 
+  app.post('/addAdmin', (req, res) => {
+    const data = req.body;
+    adminCollection.insertOne( data ).then((result) => {
+      res.send(result.insertedCount > 0);
+    });
+  });
+
+  // Admin Filter 
+  app.post('/isAdmin', (req, res) => {
+    const email = req.body.email;
+    adminCollection.find({ email:email }).toArray((error, documents) => {
+      res.send(documents.length > 0);
+    });
+  });
 
 });
 
