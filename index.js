@@ -135,6 +135,23 @@ client.connect(err => {
 
 });
 
+// Show Order list 
+
+app.get('/orderList', (req, res) => {
+  orderCollection.find()
+    .toArray((err, items) => {
+      res.send(items)
+    })
+})
+
+// DELETE Method 
+app.get('/delete/:id', (req, res) => {
+  serviceCollection.deleteOne({ _id: ObjectId(req.params.id)})
+  .then(result => {
+    res.send(result.deleteCount > 0)
+  })
+})
+
 
 
 
