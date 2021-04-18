@@ -156,13 +156,40 @@ app.get('/orderList', (req, res) => {
 })
 
 // DELETE Method 
-app.get('/delete/:id', (req, res) => {
-  serviceCollection.deleteOne({ _id: ObjectId(req.params.id)})
-  .then(result => {
-    res.send(result.deleteCount > 0)
-  })
-})
+// app.get('/remove/:id', (req, res) => {
+//   console.log(req.params.id)
+//   serviceCollection.findOneAndDelete({ _id: ObjectID(req.params.id)})
+//   .then(result => {
+//     res.json({success: result.value})
+//   })
+//   .then(error => console.log(error))
+// })
 
+// Mehedi Vai 
+// app.delete('/remove/:id',(req,res)=>{
+//   const id =ObjectID((req.params.id));
+//   serviceCollection.findOneAndDelete({_id:id})
+//   .then(documents=> {
+//     res.send(!!documents.value);
+//     console.log("Service deleted successfully");
+//   })
+// })
+
+// Niam VAi 
+app.delete('/services/:id', (req, res) =>
+    {
+        const id = ObjectID(req.params.id);
+
+        serviceCollection.findOneAndDelete({ _id: id })
+            .then(result =>
+            {
+                res.json({ success: !!result.value })
+            })
+            .then(error =>
+            {
+                console.log(error);
+            })
+    })
 
 
 
