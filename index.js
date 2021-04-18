@@ -46,29 +46,6 @@ client.connect(err => {
       res.send(result.insertedCount > 0);
       console.log("Service add to database")
     });
-    // file.mv(filePath, (err) => {
-    //   if (err) {
-    //     console.log(err);
-    //     res.status(500).send({ msg: "Failed to upload image" });
-    //   }
-    //   const newImage = fs.readFileSync(filePath);
-    //   const convertImg = newImage.toString("base64");
- 
-    //   const image = {
-    //     contentType: req.files.image.mimetype,
-    //     size: req.files.image.size,
-    //     img: Buffer.from(convertImg, "base64"),
-    //   };
-    //   serviceCollection
-    //     .insertOne({ name, price, desc, image })
-    //     .then((result) => {
-    //       fs.remove(filePath, (error) => {
-    //         if (error) console.log(error);
-    //         res.send(result.insertedCount > 0);
-    //         console.log("Service Added Successfully")
-    //       });
-    //     });
-    // });
   });
 
 
@@ -155,27 +132,9 @@ app.get('/orderList', (req, res) => {
     })
 })
 
-// DELETE Method 
-// app.get('/remove/:id', (req, res) => {
-//   console.log(req.params.id)
-//   serviceCollection.findOneAndDelete({ _id: ObjectID(req.params.id)})
-//   .then(result => {
-//     res.json({success: result.value})
-//   })
-//   .then(error => console.log(error))
-// })
 
-// Mehedi Vai 
-// app.delete('/remove/:id',(req,res)=>{
-//   const id =ObjectID((req.params.id));
-//   serviceCollection.findOneAndDelete({_id:id})
-//   .then(documents=> {
-//     res.send(!!documents.value);
-//     console.log("Service deleted successfully");
-//   })
-// })
 
-// Niam VAi 
+// Delete Method
 app.delete('/services/:id', (req, res) =>
     {
         const id = ObjectID(req.params.id);
