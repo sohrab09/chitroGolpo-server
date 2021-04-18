@@ -34,30 +34,40 @@ client.connect(err => {
     const price = req.body.price;
     const desc = req.body.desc;
     const filePath = `${__dirname}/services/${file.name}`;
-    // console.log(file);
-    file.mv(filePath, (err) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send({ msg: "Failed to upload image" });
-      }
-      const newImage = fs.readFileSync(filePath);
-      const convertImg = newImage.toString("base64");
- 
-      const image = {
-        contentType: req.files.image.mimetype,
-        size: req.files.image.size,
-        img: Buffer.from(convertImg, "base64"),
-      };
-      serviceCollection
-        .insertOne({ name, price, desc, image })
-        .then((result) => {
-          fs.remove(filePath, (error) => {
-            if (error) console.log(error);
-            res.send(result.insertedCount > 0);
-            console.log("Service Added Successfully")
-          });
-        });
+    const newImage =  file.data;
+    const convertImage = newImage.toString("base64");
+    const image = {
+      contentType: file.mimetype,
+      size: file.size,
+      img: Buffer.from(encImg, "base64"),
+    };
+    serviceCollection.insertOne({ name, price, desc, image })
+    .then((result) => {
+      res.send(result.insertedCount > 0);
     });
+    // file.mv(filePath, (err) => {
+    //   if (err) {
+    //     console.log(err);
+    //     res.status(500).send({ msg: "Failed to upload image" });
+    //   }
+    //   const newImage = fs.readFileSync(filePath);
+    //   const convertImg = newImage.toString("base64");
+ 
+    //   const image = {
+    //     contentType: req.files.image.mimetype,
+    //     size: req.files.image.size,
+    //     img: Buffer.from(convertImg, "base64"),
+    //   };
+    //   serviceCollection
+    //     .insertOne({ name, price, desc, image })
+    //     .then((result) => {
+    //       fs.remove(filePath, (error) => {
+    //         if (error) console.log(error);
+    //         res.send(result.insertedCount > 0);
+    //         console.log("Service Added Successfully")
+    //       });
+    //     });
+    // });
   });
 
 
