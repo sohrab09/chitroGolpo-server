@@ -39,11 +39,12 @@ client.connect(err => {
     const image = {
       contentType: file.mimetype,
       size: file.size,
-      img: Buffer.from(encImg, "base64"),
+      img: Buffer.from(convertImage, "base64"),
     };
     serviceCollection.insertOne({ name, price, desc, image })
     .then((result) => {
       res.send(result.insertedCount > 0);
+      console.log("Service add to database")
     });
     // file.mv(filePath, (err) => {
     //   if (err) {
